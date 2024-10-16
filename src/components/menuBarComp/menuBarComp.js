@@ -9,6 +9,8 @@ import { useState } from 'react';
 export default function MenuBarComp({ componentData, pageInfo }) {
     const [nav, setNav] = useState('hide');
     const [type, setType] = useState('products');
+    const [miniMenu, setMiniMenu] = useState(false);
+
     const getPricingPath = () => {
         let path = '/pricing/hello';
         switch (pageInfo?.country) {
@@ -35,6 +37,7 @@ export default function MenuBarComp({ componentData, pageInfo }) {
         return process.env.NEXT_PUBLIC_BASE_URL + path;
     };
     const hidden = componentData?.hide?.includes(pageInfo?.page);
+
     if (componentData && !hidden) {
         return (
             <>
@@ -93,7 +96,7 @@ export default function MenuBarComp({ componentData, pageInfo }) {
                                     {componentData?.integrations_list?.content?.length > 0 &&
                                         componentData?.integrations_list?.content.map((integration, index) => {
                                             return (
-                                                <Link key={index} href={getRelativeURL(integration?.slug, 'product')}>
+                                                <Link key={index} href={integration?.link}>
                                                     <div className='flex items-center gap-2 py-2 px-2 rounded hover:bg-secondary w-full LinkButtonCard'>
                                                         <Image
                                                             className='h-10'
@@ -191,7 +194,9 @@ export default function MenuBarComp({ componentData, pageInfo }) {
                             </Link>
                         </div>
                         <ul className='w-full flex justify-end gap-6'>
-                            <li className='text-link'>{componentData?.apidocs}</li>
+                            <a href='https://docs.msg91.com/overview' target='_blank'>
+                                <li className='text-link'>{componentData?.apidocs}</li>
+                            </a>
                             <Link className='btn btn-primary btn-sm uppercase' href={'/signup'}>
                                 {componentData?.signup_btn}
                             </Link>
@@ -207,7 +212,12 @@ export default function MenuBarComp({ componentData, pageInfo }) {
                                 alt='MSG91'
                             />
                         </Link>
-                        <button className='btn btn-icon'>
+                        <button
+                            className='btn btn-icon'
+                            onClick={() => {
+                                setMiniMenu(!miniMenu);
+                            }}
+                        >
                             <MdMenu fontSize={24} />
                         </button>
                     </div>

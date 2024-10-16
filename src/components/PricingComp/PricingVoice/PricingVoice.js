@@ -255,9 +255,11 @@ export default function PricingVoice({ data, country }) {
                         </>
                     )}
 
-                    <p className='text-lg' dangerouslySetInnerHTML={{ __html: data?.addOns?.freeText }}></p>
+                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: data?.addOns?.freeText }}></div>
                 </div>
-                <button className='btn btn-primary btn-md'>Get started</button>
+                <a href='https://web.msg91.com/signup?service=voice'>
+                    <button className='btn btn-primary btn-md'>Get started</button>
+                </a>
 
                 <div className='flex flex-col gap-4'>
                     {data?.rates &&
